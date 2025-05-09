@@ -19,7 +19,7 @@ jobs:
 
     - name: Push to new repo
       env:
-        TARGET_REPO: "https://${{ secrets.TOKEN }}@github.com/puerts/Puerts.git"
+        TARGET_REPO: "https://x-access-token:${{ secrets.PAT }}@github.com/puerts/Puerts.git"
       run: |
         git remote add target-repo $TARGET_REPO
         git push target-repo HEAD:main --force
