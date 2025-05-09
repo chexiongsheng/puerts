@@ -16,7 +16,7 @@ jobs:
       run: |
         sudo apt install git-filter-repo
         git filter-repo --path unreal/Puerts/ --force
-        git remote add target-repo https://github.com/puerts/Puerts.git
+        git remote add origin https://github.com/puerts/Puerts.git
 
     - name: Create Pull Request in Target Repo
       uses: peter-evans/create-pull-request@v5
