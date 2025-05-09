@@ -1,0 +1,25 @@
+name: sync unreal repo
+
+on: 
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0 
+
+    - name: Filter directory
+      run: |
+        sudo apt install git-filter-repo
+        git filter-repo --path unreal/Puerts/ --force
+
+    - name: Push to new repo
+      env:
+        TARGET_REPO: "https://${{ secrets.TOKEN }}@github.com/puerts/Puerts.git"
+      run: |
+        git remote add target-repo $TARGET_REPO
+        git push target-repo HEAD:main --force
