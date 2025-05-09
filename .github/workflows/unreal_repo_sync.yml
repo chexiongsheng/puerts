@@ -12,14 +12,13 @@ jobs:
       with:
         fetch-depth: 0 
 
-    - name: Filter directory
-      run: |
-        sudo apt install git-filter-repo
-        git filter-repo --path unreal/Puerts/ --force
-
-    - name: Push to new repo
-      env:
-        TARGET_REPO: "https://${{ secrets.PAT }}@github.com/puerts/Puerts.git"
-      run: |
-        git remote add target-repo $TARGET_REPO
-        git push target-repo HEAD:main --force
+    - name: Create Pull Request in Target Repo
+      uses: peter-evans/create-pull-request@v5
+      with:
+        token: ${{ secrets.PAT }}
+        repository: puerts/Puerts
+        branch: auto-sync
+        path: unreal/Puerts
+        commit-message: "Sync from upstream"
+        title: "Auto-sync changes"
+        body: "Automated sync from source repository"
