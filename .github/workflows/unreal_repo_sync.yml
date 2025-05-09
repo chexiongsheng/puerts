@@ -15,19 +15,11 @@ jobs:
     - name: Filter directory
       run: |
         sudo apt install git-filter-repo
-        git filter-repo --path unreal/Puerts/ --force
-        git remote add target-repo https://github.com/puerts/Puerts.git
-        git fetch target-repo main --depth=1
+        git filter-repo --subdirectory-filter unreal/Puerts/ --force
+        git remote add origin git@github.com:puerts/Puerts.git
 
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v5
       with:
         token: ${{ secrets.PAT }}
-        base: main 
-        repository: puerts/Puerts
-        branch: sync-${GITHUB_SHA:0:7}
-        path: .
-        commit-message: "Sync Puerts changes"
-        title: "Sync from upstream repository"
-      env:
-        GITHUB_TOKEN: ${{ secrets.PAT }}
+        base: master 
